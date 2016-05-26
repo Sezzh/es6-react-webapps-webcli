@@ -1,22 +1,15 @@
+'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router'
+import LoginActivity from './activities/login-activity';
 
-var React = window.React = require('react');
-var ReactDOM = require('react-dom');
-var ClassNames = require('classname');
-var LoginComponent = require('./ui/login-component');
+
 var mountNode = document.querySelector('[data-app="main"]');
+ReactDOM.render((
+  <Router history={hashHistory}>
+    <Route path="/" component={LoginActivity}>
 
-class MainComponent extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <main>
-        <LoginComponent/>
-      </main>
-    );
-  }
-}
-
-ReactDOM.render(<MainComponent />, mountNode);
+    </Route>
+  </Router>
+), mountNode);

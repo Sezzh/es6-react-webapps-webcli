@@ -12,7 +12,6 @@ export default class User {
   }
 
   createUser(args) {
-    var state = false;
     return Promise.resolve(this.userApi.postResource(args)).then((data) => {
         this.saveUser(data);
         return Promise.resolve(true);
@@ -20,19 +19,6 @@ export default class User {
         console.dir(error);
         return Promise.reject(error.responseJSON.username[0]);
       });
-
-    /*.then((data) => {
-      console.log("llego a user...");
-      console.log(data);
-      if (data.url !== null) {
-        this.saveUser(data);
-        state = true;
-      }
-      return Promise.resolve(state);
-    }).catch((error) => {
-      console.log("error en catch user:");
-      console.log(error);
-    });*/
   }
 
   saveUser(data) {
@@ -51,7 +37,35 @@ export default class User {
     }
   }
 
-  getUser() {
+  getUser(username) {
+    // this part is just representative because we need tokens c:
+    const errorMessage = "No podemos encontrar tú usuario :(";
+    return Promise.resolve(this.userApi.getResourceList()).then((data) => {
+      let user = null;
+      let result = {};
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].username === username) {
+          user = data[i];
+        }
+      }
+      if (user === null) {
+        result = Promise.reject(errorMessage);
+      } else {
+        result = Promise.resolve(user);
+      }
+      return result;
+    }).catch((error) => {
+      return Promise.reject(error);
+    });
+  }
+
+  loginUser(username) {
+    return this.getUser(username).then((data) => {
+      this.saveUser(data);
+      return Promise.resolve(true);
+    }).catch((error) => {
+      return Promise.reject(error);
+    });
   }
 
 }

@@ -14,14 +14,9 @@ export default class LoginActivity extends React.Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   handleHomeRoute() {
-    console.log("se creo la cuenta con exito");
     const path = "/home";
-    //this.context.router.push(path);
+    this.context.router.push(path);
   }
 
   handleNotification(message) {
@@ -31,7 +26,9 @@ export default class LoginActivity extends React.Component {
   render() {
     return (
       <main>
-        <LoginAccountComponent/>
+        <LoginAccountComponent
+          onLoginSuccess={this.handleHomeRoute}
+          onLoginFail={this.handleNotification}/>
         <CreateAccountComponent
           onCreateAccountSuccess={this.handleHomeRoute}
           onCreateAccountFail={this.handleNotification}/>

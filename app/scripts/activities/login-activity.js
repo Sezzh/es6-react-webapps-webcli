@@ -15,7 +15,7 @@ export default class LoginActivity extends React.Component {
   }
 
   handleHomeRoute() {
-    const path = "/home";
+    const path = "/home/styleguides";
     this.context.router.push(path);
   }
 

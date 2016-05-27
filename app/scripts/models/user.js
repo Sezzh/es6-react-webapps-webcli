@@ -1,4 +1,4 @@
-import ResourcesApi from '../api/resource-api';
+import ResourceApi from '../api/resource-api';
 
 export default class User {
   constructor() {
@@ -8,7 +8,10 @@ export default class User {
     this.email;
     this.lastName;
     this.firstName;
-    this.userApi = new ResourcesApi(this.resourseName);
+    this.userApi = new ResourceApi(this.resourseName);
+    if (sessionStorage["user"]) {
+      this.saveUser(JSON.parse(sessionStorage.getItem("user")));
+    }
   }
 
   createUser(args) {
@@ -16,7 +19,6 @@ export default class User {
         this.saveUser(data);
         return Promise.resolve(true);
       }).catch((error) => {
-        console.dir(error);
         return Promise.reject(error.responseJSON.username[0]);
       });
   }
